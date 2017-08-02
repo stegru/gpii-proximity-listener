@@ -1,1 +1,19 @@
-# Created by .ignore support plugin (hsz.mobi)
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.pdb
+
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+.vs/
+.idea/

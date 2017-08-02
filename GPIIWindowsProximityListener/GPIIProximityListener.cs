@@ -40,14 +40,11 @@ namespace GPII
       this.proximityDevice = ProximityDevice.GetDefault();
       if (this.proximityDevice != null)
       {
-        ProximityDevice proximityDevice1 = this.proximityDevice;
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.AddEventHandler<DeviceArrivedEventHandler>(new Func<DeviceArrivedEventHandler, EventRegistrationToken>(proximityDevice1.add_DeviceArrived), new Action<EventRegistrationToken>(proximityDevice1.remove_DeviceArrived), new DeviceArrivedEventHandler((object) this, __methodptr(ProximityDeviceArrived)));
-        ProximityDevice proximityDevice2 = this.proximityDevice;
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.AddEventHandler<DeviceDepartedEventHandler>(new Func<DeviceDepartedEventHandler, EventRegistrationToken>(proximityDevice2.add_DeviceDeparted), new Action<EventRegistrationToken>(proximityDevice2.remove_DeviceDeparted), new DeviceDepartedEventHandler((object) this, __methodptr(ProximityDeviceDeparted)));
-        // ISSUE: method pointer
-        this.proximityDevice.SubscribeForMessage("NDEF", new MessageReceivedHandler((object) this, __methodptr(messageReceivedHandler)));
+                proximityDevice.DeviceArrived += ProximityDeviceArrived;
+                proximityDevice.DeviceDeparted += ProximityDeviceDeparted;
+                
+
+        this.proximityDevice.SubscribeForMessage("NDEF", messageReceivedHandler);
         this.WriteMessageText("Proximity device initialized.\n");
       }
       else
@@ -64,10 +61,10 @@ namespace GPII
 
     public string readUserTokenFromTag(ProximityMessage message)
     {
-      DataReader dataReader = DataReader.FromBuffer(message.get_Data());
-      byte[] bytes = new byte[(IntPtr) message.get_Data().get_Length()];
+      DataReader dataReader = DataReader.FromBuffer(message.Data);
+      byte[] bytes = new byte[message.Data.Length];
       dataReader.ReadBytes(bytes);
-      string str = Encoding.ASCII.GetString(bytes, 0, (int) message.get_Data().get_Length()).Substring(7);
+      string str = Encoding.ASCII.GetString(bytes, 0, (int) message.Data.Length).Substring(7);
       Console.WriteLine("The read tag is: " + str);
       return str;
     }
@@ -85,12 +82,12 @@ namespace GPII
 
     public void ProximityDeviceArrived(ProximityDevice device)
     {
-      this.WriteMessageText("Proximate device arrived. id = " + device.get_DeviceId() + "\n");
+      this.WriteMessageText("Proximate device arrived. id = " + device.DeviceId + "\n");
     }
 
     public void ProximityDeviceDeparted(ProximityDevice device)
     {
-      this.WriteMessageText("Proximate device departed. id = " + device.get_DeviceId() + "\n");
+      this.WriteMessageText("Proximate device departed. id = " + device.DeviceId + "\n");
     }
 
     public void WriteMessageText(string message)

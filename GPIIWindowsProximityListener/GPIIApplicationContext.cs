@@ -24,7 +24,7 @@ namespace GPII
       this.notifyIcon = new NotifyIcon(this.components)
       {
         ContextMenuStrip = new ContextMenuStrip(),
-        Icon = new Icon("gpii.ico"),
+        Icon = Properties.Resources.GPII,
         Text = "GPII Windows Proximity Listener",
         Visible = true
       };

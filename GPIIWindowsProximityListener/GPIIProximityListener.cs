@@ -53,7 +53,7 @@ namespace GPII
 
     public void gpiiLogonChange(string userToken)
     {
-      string str = "http://localhost:8081/user/" + userToken + "/logonChange";
+      string str = "http://localhost:8081/user/" + userToken + "/proximityTriggered";
       this.WriteMessageText(str);
       using (WebClient webClient = new WebClient())
         webClient.DownloadString(str);

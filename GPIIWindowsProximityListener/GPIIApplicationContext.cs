@@ -25,7 +25,7 @@ namespace GPII
       {
         ContextMenuStrip = new ContextMenuStrip(),
         Icon = Properties.Resources.GPII,
-        Text = "GPII Windows Proximity Listener",
+        Text = "GPII Windows Proximity Listener (2017-08-04)",
         Visible = true
       };
       this.notifyIcon.ContextMenuStrip.Items.Add((ToolStripItem) this.ToolStripMenuItemWithHandler("&Exit", new EventHandler(this.exitItem_Click)));
